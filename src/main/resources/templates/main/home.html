@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+
+<!--The reusable header-code from layouts.html-->
+<head th:replace="layouts :: header">
+    <title>Home</title>
+</head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+
+    <h3>Main Dashboard</h3>
+    <h7>Application Version</h7>
+    <a th:text="${appVersion}"></a>
+    <hr>
+    <h4> Current Projects</h4>
+    <div class="row">
+        <div class="col-md-6">
+
+            <table class="table table-bordered table-striped">
+                <!-- The columns names in our table-->
+                <thead class="thead-dark">
+                    <tr>
+                        <th> Project Name</th>
+                        <th> Project Stage</th>
+                    </tr>
+                </thead>
+                <!-- th:each - for iterating over a collection-->
+                <!-- In our case - iterating over a List of Projects-->
+                <tbody>
+                    <tr th:each="Project : ${projectsList}">
+                        <td th:text="${Project.name}"></td>
+                        <td th:text="${Project.stage}"></td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+
+            <div class="col-md-4 mx-auto">
+                <canvas id="myPieChart" height="50" width="50"></canvas>
+
+                <!-- Assign a value that arrived from the model to the view -->
+                <!-- Into a Javascript variable -->
+                <!-- Now, this variable is acceptable to Javascript, like myChart.js -->
+                <script>
+                    var chartData = "[[${projectStatusCnt}]]"
+                </script>
+
+            </div>
+
+    </div>
+</div>
+
+
+<div class="container">
+    <h4> Current Employees</h4>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table table-bordered table-striped">
+                <!-- The columns names in our table-->
+                <thead class="thead-dark">
+                <tr>
+                    <th> First Name</th>
+                    <th> Last Name</th>
+                    <th> Project Count</th>
+                </tr>
+                </thead>
+                <!-- th:each - for iterating over a collection-->
+                <!-- In our case - iterating over a List of Projects-->
+                <tbody>
+                <tr th:each="aEmployeeProjectCnt : ${employeesListProjectCnt}">
+                    <td th:text="${aEmployeeProjectCnt.firstName}"></td>
+                    <td th:text="${aEmployeeProjectCnt.lastName}"></td>
+                    <td th:text="${aEmployeeProjectCnt.projectCount}"></td>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script type="text/javascript" th:src="@{js/myChart.js}"></script>
+
+</body>
+
+
+</html>
+

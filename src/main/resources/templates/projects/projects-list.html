@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--The reusable header-code from layouts.html-->
+<head th:replace="layouts :: header"></head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3> Projects Repository</h3>
+    <hr>
+
+    <!-- Add new Project Buttton-->
+    <a th:href="@{/projects/new}" class="btn btn-primary btn-sm mb-3">
+        New Project
+    </a>
+
+    <table class="table table-bordered table-striped">
+        <!-- The columns names in our table-->
+        <thead class="thead-dark">
+        <tr>
+            <th> Project Name</th>
+            <th> Project Stage</th>
+        </tr>
+        </thead>
+        <!-- th:each - for iterating over a collection-->
+        <!-- In our case - iterating over a List of Projects-->
+        <tbody>
+            <tr th:each="aProject : ${projectsList}">
+                <td th:text="${aProject.name}"></td>
+                <td th:text="${aProject.stage}"></td>
+            </tr>
+
+        </tbody>
+
+    </table>
+</div>
+</body>
+</html>

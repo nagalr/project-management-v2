@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--The reusable header-code from layouts.html-->
+<head th:replace="layouts :: header"></head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+<div class="container">
+    <h3> Employees Repository</h3>
+    <hr>
+
+    <!-- Add new Employee Button-->
+    <a th:href="@{/employees/new}" class="btn btn-primary btn-sm mb-3">
+        Add Employee
+    </a>
+    <br>
+
+    <table class="table table-bordered table-striped">
+        <!-- The columns names in our table-->
+        <thead class="thead-dark">
+        <tr>
+            <th> First Name</th>
+            <th> Last Name</th>
+            <th> Email Address</th>
+        </tr>
+        </thead>
+        <!-- th:each - for iterating over a collection-->
+        <!-- In our case - iterating over a List of Projects-->
+        <tbody>
+        <tr th:each="aEmployee : ${employeesList}">
+            <td th:text="${aEmployee.firstName}"></td>
+            <td th:text="${aEmployee.lastName}"></td>
+            <td th:text="${aEmployee.email}"></td>
+        </tr>
+
+        </tbody>
+
+    </table>
+</div>
+
+</body>
+</html>

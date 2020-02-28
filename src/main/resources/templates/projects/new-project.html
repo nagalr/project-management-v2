@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<!--The reusable header-code from layouts.html-->
+<head th:replace="layouts :: header"></head>
+
+<body>
+
+<nav th:replace="layouts :: navbar"></nav>
+
+    <div class="container">
+        <form action="/projects/save" th:object="${project}" method="post">
+            <input type="text" placeholder="Project Name" th:field="${project.name}">
+
+            <select th:field="${project.stage}">
+                <option th:value="NOTSTARTED"> Not Started</option>
+                <option th:value="INPROGRESS"> IN PROGRESS</option>
+                <option th:value="COMPLETED"> COMPLETED</option>
+            </select>
+
+            <textarea type="text" placeholder="Enter Project Description" th:field="${project.description}"></textarea>
+
+            <!-- this employees are part of the given project Object-->
+            <!-- we could write: th:field="${project.employees}" - It's the same-->
+            <select th:field="*{employees}" multiple="multiple">
+                <option th:each="employee : ${allEmployees}"
+                        th:value="${employee.employeeId}"
+                        th:text="${employee.firstName}">
+                </option>
+            </select>
+
+            <button type="submit">Create Project</button>
+
+        </form>
+    </div>
+</body>
+</html>
+
