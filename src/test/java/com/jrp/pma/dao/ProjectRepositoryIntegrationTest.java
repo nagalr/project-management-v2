@@ -1,4 +1,4 @@
-package com.jrp.dao;
+package com.jrp.pma.dao;
 
 /*
  the test will load all the classes from Spring Context
@@ -17,6 +17,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlGroup;
@@ -24,9 +25,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(classes = ProjectManagementV2Application.class)
-@RunWith(SpringRunner.class)
-@DataJpaTest
+@SpringBootTest
+@RunWith(SpringRunner.class) // needed to junit testing
 @SqlGroup( {@Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"classpath:schema.sql", "classpath:data.sql"}), // by default, it will drop the tables and sequences if exist, before execution of the line, it drops at the end too!
             @Sql(executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD, scripts = "classpath:drop.sql") }) // not needed here, just to show another execution phase available at end of executing the previous line, the test will run exactly without this line
 public class ProjectRepositoryIntegrationTest {
