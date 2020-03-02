@@ -7,8 +7,9 @@ import java.util.List;
 public class Employee {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long employeeId;
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="employee_generator")
+    @SequenceGenerator(name="employee_generator",sequenceName="employee_seq", allocationSize=1,initialValue=1)
+    private long employee_id;
 
     private String firstName;
     private String lastName;
@@ -41,12 +42,12 @@ public class Employee {
         this.projects = projects;
     }
 
-    public long getEmployeeId() {
-        return employeeId;
+    public long getEmployee_id() {
+        return employee_id;
     }
 
-    public void setEmployeeId(long employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee_id(long employee_id) {
+        this.employee_id = employee_id;
     }
 
     public String getFirstName() {

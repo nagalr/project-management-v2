@@ -25,7 +25,7 @@
             <!-- we could write: th:field="${project.employees}" - It's the same-->
             <select th:field="*{employees}" multiple="multiple">
                 <option th:each="employee : ${allEmployees}"
-                        th:value="${employee.employeeId}"
+                        th:value="${employee.employee_id}"
                         th:text="${employee.firstName}">
                 </option>
             </select>

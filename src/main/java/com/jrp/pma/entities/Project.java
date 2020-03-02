@@ -9,9 +9,10 @@ import java.util.List;
 @Entity
 public class Project {
 
-    @Id // This is an Id field
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // The DB will handle the ID's
-    private long ProjectID;
+    @Id
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator="project_generator")
+    @SequenceGenerator(name="project_generator",sequenceName="project_seq", allocationSize=1,initialValue=1)
+    private long Project_id;
 
     private String name;
     private String stage; // NOTSTARTED, COMPLETED, INPROGRESS
@@ -45,12 +46,12 @@ public class Project {
         this.employees = employees;
     }
 
-    public long getProjectID() {
-        return ProjectID;
+    public long getProject_id() {
+        return Project_id;
     }
 
-    public void setProjectID(long projectID) {
-        ProjectID = projectID;
+    public void setProject_id(long project_id) {
+        Project_id = project_id;
     }
 
     public String getName() {
