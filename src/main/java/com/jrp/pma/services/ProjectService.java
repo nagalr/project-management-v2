@@ -8,6 +8,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/*
+ @Service - so it will add to the Spring Context
+ When the application is loaded
+ this registered as a Service Bean.
+ All we do here is implementing the repository functions
+*/
 @Service
 public class ProjectService {
 
