@@ -27,7 +27,7 @@ public class ApplicationLoggerAspect {
     }
 
     // This method will run after the method in the ()
-    @After("definePackagePointcuts()")
+    @After("definePackagePointcuts()" + "|| within(com.jrp.pma.dao..*)")
     public void log() {
         log.debug("---------------------------------");
     }
