@@ -4,6 +4,8 @@ import com.jrp.pma.dao.IEmployeeRepository;
 import com.jrp.pma.dao.IProjectRepository;
 import com.jrp.pma.entities.Employee;
 import com.jrp.pma.entities.Project;
+import com.jrp.pma.services.EmployeeService;
+import com.jrp.pma.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,17 +29,18 @@ import java.util.List;
 @RequestMapping("/projects")
 public class ProjectController {
 
+    // Instated of Autowired the repository we Autowired the Service, for future changes
     @Autowired
-    IProjectRepository proRepo;
+    ProjectService proService;
 
     @Autowired
-    IEmployeeRepository empRepo;
+    EmployeeService empService;
 
     @GetMapping
     public String projectsList(Model model) {
 
         // querying the DB for Projects
-        List<Project> projects = proRepo.findAll();
+        List<Project> projects = proService.getAll();
         model.addAttribute("projectsList", projects);
 
         return "projects/projects-list";
@@ -61,7 +64,7 @@ public class ProjectController {
 
         Project aProject = new Project();
 
-        List<Employee> employees = empRepo.findAll();
+        List<Employee> employees = empService.getAll();
 
         /*
          Here we map an empty Object to the form. (aProject)
@@ -89,7 +92,7 @@ public class ProjectController {
                                  Model model ) {
 
         // Saving the 'project' Object to the DB
-        proRepo.save(project);
+        proService.save(project);
 
         /*
          Redirect after saving to the DB
