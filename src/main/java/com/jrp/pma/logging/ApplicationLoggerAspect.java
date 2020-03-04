@@ -51,11 +51,6 @@ public class ApplicationLoggerAspect {
         log.debug("_______________________________________ \n \n \n");
 
         return o;
-
     }
-
-
-
-
 
 }
