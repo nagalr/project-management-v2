@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -20,6 +21,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource; // Spring will auto-wired h2 as the data-source (or Postgresql)
 
+    @Autowired // this Bean is defined in our WebConfig class
+    BCryptPasswordEncoder bCryptEncoder; // it will inject a new instance here
     /*
      Override the default function to define the Authentication Mechanism
      we will use the type: AuthenticationManagerBuilder to build our rules
@@ -55,20 +58,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select username, role " +
                                             "from user_accounts where username = ?")
                 .dataSource(dataSource)  // Spring will Autowired 'dataSource'
-                .passwordEncoder(getPasswordEncoder());
-    }
-
-    /*
-     Define a Bean that will load to Spring Context
-     and returns 'PasswordEncoder' Object.
-     we will define inside 'NoPassword..' to have some
-     functionality of the code, a real Password Encoder
-     will be built later, this is a temp option
-    */
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-
+                .passwordEncoder(bCryptEncoder); // this way, the passwords will be saved in the DB encrypted
     }
 
     // define the Authorization functionality
