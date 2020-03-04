@@ -6,4 +6,5 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 // the @Configuration annotation will add the class to Spring Context
 @Configuration
 public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
+
 }
