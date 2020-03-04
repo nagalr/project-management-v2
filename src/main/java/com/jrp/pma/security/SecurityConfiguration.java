@@ -20,25 +20,40 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource; // Spring will auto-wired h2 as the data-source
 
-    // Override the default function to define the Authentication Mechanism
-    // we will use the type: AuthenticationManagerBuilder to build our rules
+    /*
+     Override the default function to define the Authentication Mechanism
+     we will use the type: AuthenticationManagerBuilder to build our rules
+     using this, Spring later will build 'USERS' and 'AUTHORITIES' tables
+    */
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication().dataSource(dataSource)
+//                .withDefaultSchema() // will create tables to support our Authentication and Authorizations rules, by creating 'USERS' and 'AUTHORITIES' tables
+//                .withUser("myuser")
+//                    .password("pass")
+//                        .roles("USER")
+//                .and()
+//                .withUser("taz")
+//                    .password("pass2")
+//                    .roles("USER")
+//                .and()
+//                .withUser("managerUser")
+//                    .password("pass3")
+//                    .roles("ADMIN");
+//    }
+
+    /*
+     another similar function, different implementation
+     This implementation works with the h2-console definition disabled
+     (in application-dev.properties)
+    */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
-                .withDefaultSchema() // will create tables to support our Authentication and Authorizations rules
-                .withUser("myuser")
-                    .password("pass")
-                        .roles("USER")
-                .and()
-                .withUser("taz")
-                    .password("pass2")
-                    .roles("USER")
-                .and()
-                .withUser("managerUser")
-                    .password("pass3")
-                    .roles("ADMIN");
-
-
+                .usersByUsernameQuery("select username, password, enabled " +
+                                      "from users where username = ?")
+                .authoritiesByUsernameQuery("select username, authority " +
+                                            "from authorities where username = ?");
     }
 
     /*
@@ -58,9 +73,15 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     // we will specify here what the logged-in user allowed to-do with 'roles'
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable() // the first definition allows to save projects/employees
+                .authorizeRequests()
                 .antMatchers("/projects/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Project Creation
                 .antMatchers("/employees/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
+                .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/").authenticated().and().formLogin(); // anyone that is authenticated has access to the endpoint "/"
+
+        // Disable to access h2-console (with the above 'permitAll()' )
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 }
