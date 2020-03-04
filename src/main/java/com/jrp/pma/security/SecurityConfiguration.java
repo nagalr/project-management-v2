@@ -68,8 +68,10 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
         http.csrf().disable() // the first definition allows to save projects/employees
                 .authorizeRequests()
                 .antMatchers("/projects/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Project Creation
+                .antMatchers("/projects/save").hasRole("ADMIN")
                 .antMatchers("/employees/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
-                .antMatchers("/", "/**").permitAll()
+                .antMatchers("/employees/save").hasRole("ADMIN")
+                .antMatchers("/", "/**").permitAll() // if this role was on top of the previous two, only this one will count
                 .and()
                 .formLogin(); // using the default login form, we can define .loginPage() if we have
 
