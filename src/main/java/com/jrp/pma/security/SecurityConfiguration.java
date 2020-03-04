@@ -54,7 +54,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                                       "from user_accounts where username = ?")
                 .authoritiesByUsernameQuery("select username, role " +
                                             "from user_accounts where username = ?")
-                .dataSource(dataSource);  // Spring will Autowired 'dataSource'
+                .dataSource(dataSource)  // Spring will Autowired 'dataSource'
+                .passwordEncoder(getPasswordEncoder());
     }
 
     /*
