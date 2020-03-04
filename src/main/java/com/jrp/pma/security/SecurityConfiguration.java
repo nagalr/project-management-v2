@@ -25,7 +25,12 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .and()
                 .withUser("taz")
                     .password("pass2")
-                    .roles("USER");
+                    .roles("USER")
+                .and()
+                .withUser("managerUser")
+                    .password("pass3")
+                    .roles("ADMIN");
+
 
     }
 
@@ -43,6 +48,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     }
 
     // define the Authorization functionality
+    // we will specify here what the logged-in user allowed to-do with 'roles'
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
