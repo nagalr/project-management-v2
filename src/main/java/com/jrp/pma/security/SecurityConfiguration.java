@@ -69,8 +69,9 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/projects/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Project Creation
                 .antMatchers("/employees/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
-                .antMatchers("/h2-console/**").permitAll()
-                .antMatchers("/").authenticated().and().formLogin(); // anyone that is authenticated has access to the endpoint "/"
+                .antMatchers("/", "/**").permitAll()
+                .and()
+                .formLogin(); // using the default login form, we can define .loginPage() if we have
 
         // Disable to access h2-console (with the above 'permitAll()' )
         http.csrf().disable();
