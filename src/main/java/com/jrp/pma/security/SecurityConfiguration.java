@@ -18,7 +18,7 @@ import javax.sql.DataSource;
 public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    DataSource dataSource; // Spring will auto-wired h2 as the data-source
+    DataSource dataSource; // Spring will auto-wired h2 as the data-source (or Postgresql)
 
     /*
      Override the default function to define the Authentication Mechanism
@@ -49,11 +49,12 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
+        auth.jdbcAuthentication()
                 .usersByUsernameQuery("select username, password, enabled " +
-                                      "from users where username = ?")
-                .authoritiesByUsernameQuery("select username, authority " +
-                                            "from authorities where username = ?");
+                                      "from user_accounts where username = ?")
+                .authoritiesByUsernameQuery("select username, role " +
+                                            "from user_accounts where username = ?")
+                .dataSource(dataSource);  // Spring will Autowired 'dataSource'
     }
 
     /*
