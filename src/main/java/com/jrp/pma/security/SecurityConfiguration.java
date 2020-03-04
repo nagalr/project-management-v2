@@ -1,5 +1,6 @@
 package com.jrp.pma.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -9,16 +10,22 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import javax.sql.DataSource;
+
 // the @Configuration annotation will add the class to Spring Context
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 
+    @Autowired
+    DataSource dataSource; // Spring will auto-wired h2 as the data-source
+
     // Override the default function to define the Authentication Mechanism
     // we will use the type: AuthenticationManagerBuilder to build our rules
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .withDefaultSchema() // will create tables to support our Authentication and Authorizations rules
                 .withUser("myuser")
                     .password("pass")
                         .roles("USER")
@@ -51,6 +58,9 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     // we will specify here what the logged-in user allowed to-do with 'roles'
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        super.configure(http);
+        http.authorizeRequests()
+                .antMatchers("/projects/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Project Creation
+                .antMatchers("/employees/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
+                .antMatchers("/").authenticated().and().formLogin(); // anyone that is authenticated has access to the endpoint "/"
     }
 }
