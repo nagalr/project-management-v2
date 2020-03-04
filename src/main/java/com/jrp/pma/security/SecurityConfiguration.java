@@ -3,8 +3,10 @@ package com.jrp.pma.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 // the @Configuration annotation will add the class to Spring Context
@@ -19,13 +21,30 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
         auth.inMemoryAuthentication()
                 .withUser("myuser")
                     .password("pass")
-                        .roles("USER");
+                        .roles("USER")
+                .and()
+                .withUser("taz")
+                    .password("pass2")
+                    .roles("USER");
 
     }
 
+    /*
+     Define a Bean that will load to Spring Context
+     and returns 'PasswordEncoder' Object.
+     we will define inside 'NoPassword..' to have some
+     functionality of the code, a real Password Encoder
+     will be built later, this is a temp option
+    */
     @Bean
     public PasswordEncoder getPasswordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
 
     }
 
+    // define the Authorization functionality
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        super.configure(http);
+    }
 }
