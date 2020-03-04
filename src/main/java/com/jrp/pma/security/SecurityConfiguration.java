@@ -58,15 +58,14 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery("select username, role " +
                                             "from user_accounts where username = ?")
                 .dataSource(dataSource)  // Spring will Autowired 'dataSource'
-                .passwordEncoder(bCryptEncoder); // this way, the passwords will be saved in the DB encrypted
+                .passwordEncoder(bCryptEncoder); // here decoding the password, when a user registered the password will be Encoded
     }
 
     // define the Authorization functionality
     // we will specify here what the logged-in user allowed to-do with 'roles'
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable() // the first definition allows to save projects/employees
-                .authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers("/projects/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Project Creation
                 .antMatchers("/projects/save").hasRole("ADMIN")
                 .antMatchers("/employees/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
@@ -76,7 +75,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .formLogin(); // using the default login form, we can define .loginPage() if we have
 
         // Disable to access h2-console (with the above 'permitAll()' )
-        http.csrf().disable();
-        http.headers().frameOptions().disable();
+        // http.csrf().disable(); // good only for h2 usage
+        // http.headers().frameOptions().disable(); // good only for h2 usage
     }
 }
