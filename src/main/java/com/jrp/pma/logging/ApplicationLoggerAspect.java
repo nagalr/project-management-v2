@@ -45,7 +45,6 @@ public class ApplicationLoggerAspect {
             e.printStackTrace();
         }
 
-        log.debug("\n \n \n");
         log.debug("********* After Method Execution ********** \n {}.{} () with arguments[s] = {}",
                 jp.getSignature().getDeclaringTypeName(),
                 jp.getSignature().getName(), Arrays.toString(jp.getArgs()));
