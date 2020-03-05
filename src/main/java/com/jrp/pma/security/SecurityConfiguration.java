@@ -65,8 +65,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/projects/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Project Creation
                 .antMatchers("/projects/save").hasRole("ADMIN")
-                .antMatchers("/employees/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
-                .antMatchers("/employees/save").hasRole("ADMIN")
+                .antMatchers("/employees/new").hasAuthority("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
+                .antMatchers("/employees/save").hasAuthority("ADMIN")
                 .antMatchers("/", "/**").permitAll() // if this role was on top of the previous two, only this one will count
                 .and()
                 .formLogin(); // using the default login form, we can define .loginPage() if we have

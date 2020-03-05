@@ -1,5 +1,6 @@
 package com.jrp.pma.controllers;
 
+import com.jrp.pma.dao.IUserAccountRepository;
 import com.jrp.pma.entities.UserAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -33,8 +34,10 @@ public class SecurityController {
 
         user.setPassword( bCryptEncoder.encode(user.getPassword()) ); // here we can invoke the Encoder on the password that passed by the form, before it will saved to the DB, getPassword - the password from the form, before encryption
 
+        // save the user to the DB (we not using a special 'Service' here as we did before, to save time)
         accountRepo.save(user);
 
+        return "redirect:/"; // redirect to the main Dashboard
 
     }
 }

@@ -6,9 +6,10 @@ import javax.persistence.*;
 @Table(name = "user_accounts") // to understand to which table we referring
 public class UserAccount {
 
-
+    @Id
     @Column(name = "user_id") // to associate userId with user_id in the DB
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_accounts_seq")
+    @SequenceGenerator(name="user_accounts_seq",sequenceName="user_accounts_seq", allocationSize=1,initialValue=1)
     private long userId;
 
     /*
