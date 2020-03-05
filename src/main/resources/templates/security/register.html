@@ -32,7 +32,8 @@
 
             <!-- define a csrf token that will be sent with every request-->
             <!-- It's purpose is to avoid attacks by redirecting-->
-            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
+            <!-- Here it's not needed since we use: th:action="@{/register/save}"-->
+<!--            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />-->
 
             <div class="form-group">
                 <div class="">

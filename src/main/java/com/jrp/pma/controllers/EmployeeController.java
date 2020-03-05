@@ -43,6 +43,6 @@ public class EmployeeController {
 
         empService.save(employee);
 
-        return "redirect:/employees/new";
+        return "redirect:/employees";
     }
 }

@@ -10,7 +10,7 @@
 <nav th:replace="layouts :: navbar"></nav>
 
     <div class="container">
-        <form action="/projects/save" th:object="${project}" method="post">
+        <form th:action="@{/projects/save}" th:object="${project}" method="post">
             <input type="text" placeholder="Project Name" th:field="${project.name}">
 
             <select th:field="${project.stage}">
@@ -29,6 +29,9 @@
                         th:text="${employee.firstName}">
                 </option>
             </select>
+
+<!--            we changed to: th:action="@{/projects/save}" so we can avoid this line: (the csrf-token comes with thymeleaf) -->
+<!--            <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
 
             <button type="submit">Create Project</button>
 
