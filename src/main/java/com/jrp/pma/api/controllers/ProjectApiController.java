@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+// The comments for this class taken from EmployeeApiController
+// They are similar, but the naming related to Employee (instead of Project)
+
 @RestController
 @RequestMapping("/app-api/projects")
 public class ProjectApiController {

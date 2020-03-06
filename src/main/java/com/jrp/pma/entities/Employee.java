@@ -3,6 +3,9 @@ package com.jrp.pma.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
@@ -13,8 +16,18 @@ public class Employee {
     @SequenceGenerator(name="employee_generator",sequenceName="employee_seq", allocationSize=1,initialValue=1)
     private long employee_id;
 
+    @NotNull
+    @Size(min = 2, max = 50)
     private String firstName;
+
+    @NotNull
+    @Size(min = 1, max = 50)
     private String lastName;
+
+    // The @Email validation will validate everything needed
+    // to validate an Email address
+    @NotNull
+    @Email
     private String email;
 
     @ManyToMany(cascade = { CascadeType.DETACH,
