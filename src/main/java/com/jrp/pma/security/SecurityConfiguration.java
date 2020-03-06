@@ -62,7 +62,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
     // we will specify here what the logged-in user allowed to-do with 'roles'
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.csrf().disable()
+                .authorizeRequests()
                 .antMatchers("/projects/new").hasRole("ADMIN") // Define that only "ADMIN" can access a new Project Creation
                 .antMatchers("/projects/save").hasRole("ADMIN") // we can define a role to a user by 'ROLE_ADMIN' ('ROLE_' before)
                 .antMatchers("/employees/new").hasAuthority("ADMIN") // Define that only "ADMIN" can access a new Employee Creation
@@ -72,7 +73,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
                 .formLogin(); // using the default login form, we can define .loginPage() if we have
 
         // Disable to access h2-console (with the above 'permitAll()' )
-        // http.csrf().disable(); // good only for h2 usage
+        // http.csrf().disable(); // good only for h2 usage (not secure)
         // http.headers().frameOptions().disable(); // good only for h2 usage
     }
 }
