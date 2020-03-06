@@ -1,6 +1,7 @@
 package com.jrp.pma.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.jrp.pma.validators.IUniqueValue;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -28,6 +29,7 @@ public class Employee {
     // to validate an Email address
     @NotNull
     @Email
+    @IUniqueValue
     private String email;
 
     @ManyToMany(cascade = { CascadeType.DETACH,
