@@ -54,7 +54,7 @@ public class EmployeeApiController {
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public Employee partialUpdate(@PathVariable("{id") long id, @RequestBody Employee patchEmployee) {
+    public Employee partialUpdate(@PathVariable("id") long id, @RequestBody Employee patchEmployee) {
         Employee emp = empRepo.findById(id).get();
 
         // here we checking what was updated in the PATCH
