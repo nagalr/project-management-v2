@@ -32,5 +32,8 @@ public interface IEmployeeRepository extends CrudRepository<Employee, Long> {
                     "Order by 3 DESC;")
     List<EmployeeProject> employeeProjects();
 
+    // Spring will be smart to understand that we asking for Email
+    // we do not need to implement the functionality, just write it correctly
+    // meaning, writing: 'findByEmail'
     Employee findByEmail(String value);
 }
