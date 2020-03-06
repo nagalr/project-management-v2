@@ -36,4 +36,9 @@ public interface IEmployeeRepository extends CrudRepository<Employee, Long> {
     // we do not need to implement the functionality, just write it correctly
     // meaning, writing: 'findByEmail'
     Employee findByEmail(String value);
+
+    // another example that we can use (but will not)
+    // just an example to how Spring-Data is smart to
+    // understand what to query the DB for
+    // Employee findByemployee_id(long id);
 }
