@@ -1,4 +1,5 @@
 package com.jrp.pma.validators;
 
-public interface UniqueValue {
+public @interface IUniqueValue {
+
 }
