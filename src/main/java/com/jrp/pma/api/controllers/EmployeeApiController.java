@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/app-api/employees")
 public class EmployeeApiController {
@@ -17,7 +18,9 @@ public class EmployeeApiController {
     IEmployeeRepository empRepo;
 
     @GetMapping
-    public Iterable <Employee> getEmployees() {
-
+    public List<Employee> getEmployees() {
+        return empRepo.findAll();
     }
+
+
 }

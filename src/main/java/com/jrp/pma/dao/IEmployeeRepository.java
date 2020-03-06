@@ -10,8 +10,8 @@ import java.util.List;
 // used to access data from the the DB
 public interface IEmployeeRepository extends CrudRepository<Employee, Long> {
 
-//    @Override
-//    List<Employee> findAll();
+    @Override
+    List<Employee> findAll();
 
     /*
      @Query for querying the DB
