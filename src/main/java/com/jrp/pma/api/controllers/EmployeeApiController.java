@@ -17,7 +17,7 @@ public class EmployeeApiController {
     IEmployeeRepository empRepo;
 
     @GetMapping
-    public List<Employee> getEmployees() {
+    public Iterable <Employee> getEmployees() {
 
     }
 }
