@@ -31,7 +31,7 @@
             </select>
 
 <!--            we changed to: th:action="@{/projects/save}" so we can avoid this line: (the csrf-token comes with thymeleaf) -->
-<!--            <input type="hidden" name="_csrf" th:value="${_csrf.token}" /> -->
+            <input type="hidden" name="_csrf" th:value="${_csrf.token}" />
 
             <button type="submit">Create Project</button>
 
