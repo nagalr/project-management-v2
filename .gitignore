@@ -30,3 +30,5 @@ build/
 ### VS Code ###
 .vscode/
 /= app.log
+/= app.log.2020-03-04.0.gz
+/the-course-source-code.txt

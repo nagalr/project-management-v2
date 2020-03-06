@@ -1,7 +1,7 @@
 package com.jrp.pma.api.controllers;
 
-import com.jrp.pma.dao.IEmployeeRepository;
-import com.jrp.pma.entities.Employee;
+import com.jrp.pma.dao.IProjectRepository;
+import com.jrp.pma.entities.Project;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.http.HttpStatus;
@@ -9,22 +9,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-
 @RestController
-@RequestMapping("/app-api/employees")
-public class EmployeeApiController {
+@RequestMapping("/app-api/projects")
+public class ProjectApiController {
 
     @Autowired
-    IEmployeeRepository empRepo;
+    IProjectRepository proRepo;
 
     @GetMapping
-    public List<Employee> getEmployees() {
-        return empRepo.findAll();
+    public List<Project> getProjects() {
+        return proRepo.findAll();
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployeeById(@PathVariable("id") Long id) {
-        return empRepo.findById(id).get();
+    public Project getProjectById(@PathVariable("id") Long id) {
+        return proRepo.findById(id).get();
     }
 
     /*
@@ -35,8 +34,8 @@ public class EmployeeApiController {
     */
     @PostMapping(consumes = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee create(@RequestBody Employee employee) {
-        return empRepo.save(employee);
+    public Project create(@RequestBody Project proj) {
+        return proRepo.save(proj);
     }
 
     /*
@@ -50,33 +49,33 @@ public class EmployeeApiController {
     */
     @PutMapping(path = "/{id}", consumes = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public Employee update(@RequestBody Employee employee) {
-        return empRepo.save(employee);
+    public Project update(@RequestBody Project proj) {
+        return proRepo.save(proj);
     }
 
     @PatchMapping(path = "/{id}", consumes = "application/json")
-    public Employee partialUpdate(@PathVariable("id") Long id, @RequestBody Employee patchEmployee) {
-        Employee emp = empRepo.findById(id).get();
+    public Project partialUpdate(@PathVariable("id") Long id, @RequestBody Project patchProject) {
+        Project proj = proRepo.findById(id).get();
 
         // here we checking what was updated in the PATCH
         // the first check is there was an update that made to the email
         // we checking that by checking if it's equals to null
         // and if an update was done, we will mae the changes
-        if (patchEmployee.getEmail() != null) { // if the email included in the request body
-            emp.setEmail(patchEmployee.getEmail()); // get the email from the request body and assign it
+        if (patchProject.getName() != null) { // if the email included in the request body
+            proj.setName(patchProject.getName()); // get the email from the request body and assign it
         }
 
-        if (patchEmployee.getFirstName() != null) { // if the email included in the request body
-            emp.setFirstName(patchEmployee.getFirstName()); // get the email from the request body and assign it
+        if (patchProject.getDescription() != null) { // if the email included in the request body
+            proj.setDescription(patchProject.getDescription()); // get the email from the request body and assign it
         }
 
-        if (patchEmployee.getLastName() != null) { // if the email included in the request body
-            emp.setLastName(patchEmployee.getLastName()); // get the email from the request body and assign it
+        if (patchProject.getStage() != null) { // if the email included in the request body
+            proj.setStage(patchProject.getStage()); // get the email from the request body and assign it
         }
 
         // saving the updated employee to the DB
         // the 'save' function will return Employee as needed by the function
-        return empRepo.save(emp);
+        return proRepo.save(proj);
 
     }
 
@@ -90,7 +89,7 @@ public class EmployeeApiController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable("id") Long id) {
         try {
-            empRepo.deleteById(id);
+            proRepo.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             //e.printStackTrace(); // this line will give the error, we can leave it empty
         }
