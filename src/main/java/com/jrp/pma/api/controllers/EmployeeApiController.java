@@ -4,6 +4,8 @@ import com.jrp.pma.dao.IEmployeeRepository;
 import com.jrp.pma.entities.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -95,6 +97,19 @@ public class EmployeeApiController {
         } catch (EmptyResultDataAccessException e) {
             //e.printStackTrace(); // this line will give the error, we can leave it empty
         }
+    }
+
+    // creating another endpoint that will allow pagination
+    // we can use the 'Sort' option as well, but will do it here
+    @GetMapping(params = {"page", "size"})
+    @ResponseStatus(HttpStatus.OK)
+    public Iterable<Employee> findPaginatedEmployees(@RequestParam("page") int page,
+                                                     @RequestParam("size") int size) {
+        Pageable pageAndSize = PageRequest.of(page, size);
+
+        // this usage of findAll() will use the definition from:
+        // PagingAndSortingRepository (there are few options for findAll() )
+        return empRepo.findAll(pageAndSize);
     }
 
 
