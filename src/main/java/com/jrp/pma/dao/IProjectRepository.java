@@ -4,6 +4,7 @@ import com.jrp.pma.dto.ChartData;
 import com.jrp.pma.entities.Project;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  the first argument is the entity class
  used to access data from the the DB
 */
-public interface IProjectRepository extends CrudRepository<Project, Long> {
+public interface IProjectRepository extends PagingAndSortingRepository<Project, Long> {
 
     /*
      Override the default 'findAll()' that
