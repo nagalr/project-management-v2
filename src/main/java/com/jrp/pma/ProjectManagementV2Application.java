@@ -20,5 +20,4 @@ public class ProjectManagementV2Application {
 
         SpringApplication.run(ProjectManagementV2Application.class, args);
     }
-
 }

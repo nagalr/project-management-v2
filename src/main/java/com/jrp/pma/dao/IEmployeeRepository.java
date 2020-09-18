@@ -17,7 +17,7 @@ public interface IEmployeeRepository extends PagingAndSortingRepository<Employee
      @Query for querying the DB
      nativeQuery to the used DB,
      not a query particular for Spring JPA
-     Thw original query on the DB is:
+     The original query on the DB is:
      SELECT e.first_name, e.last_name, count(pe.employee_id)
         FROM  employee e left join project_employee pe
         ON pe.employee_id = e.employee_id
